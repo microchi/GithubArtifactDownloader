@@ -1,0 +1,23 @@
+{
+  "name": "github_artifact_downloader",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "GAD.js",
+  "bin": "GAD.js",
+  "scripts": {
+    "run": "node .",
+    "build": "pkg . -t node14-alpine-x64 -o GAD",
+    "buildwin": "pkg . -t node14-windows-x64 -o GAD.exe"
+  },
+  "dependencies": {
+    "@octokit/core": "^3.1.2",
+    "commander": "^6.1.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "rimraf": "^3.0.2",
+    "unzipper": "^0.10.11"
+  },
+  "devDependencies": {
+    "pkg": "^4.4.9"
+  }
+}
