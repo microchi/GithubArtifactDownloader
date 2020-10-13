@@ -1,5 +1,14 @@
-FROM alpine:latest
 
+FROM node:latest AS build
+WORKDIR /app
+
+COPY package.json .
+COPY GAD.js .
+RUN yarn
+RUN yarn install
+RUN yarn build
+
+FROM alpine:latest
 ENV GAD_Owner=YourOwner
 ENV GAD_Repo=YourRepository
 ENV GAD_Token=YourToken
@@ -9,12 +18,12 @@ EXPOSE 3000
 
 WORKDIR /root
 
-COPY GAD .
-
-RUN apk update && apk add --no-cache libstdc++ libgcc
-
 RUN mkdir /root/dist
 
 VOLUME /root/dist
+
+RUN apk update && apk add --no-cache libstdc++ libgcc
+
+COPY --from=build /app/GAD /root/GAD
 
 CMD ["./GAD"]
