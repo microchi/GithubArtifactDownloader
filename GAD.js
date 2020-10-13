@@ -80,7 +80,7 @@ async function DownloadArtifact() {
   console.log('Done!');
 }
 
-if (program.runonce === 'true') {
+if (program.runonce === 'true' || program.runonce === true) {
   console.log('Run Once!');
   DownloadArtifact();
   return;
