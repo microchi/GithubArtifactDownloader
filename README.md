@@ -13,7 +13,7 @@ How To Use
     
 2.Run Once
 
-    docker run --rm -d -v <ThePathYouWantToDownload>:/root/dist -e GAD_Owner=<Owner> -e GAD_Repo=<Repository> -e GAD_Token=<Token> -e GAD_Runonce=true microchi/github_artifact_downloader:latest
+    docker run --rm -v <ThePathYouWantToDownload>:/root/dist -e GAD_Owner=<Owner> -e GAD_Repo=<Repository> -e GAD_Token=<Token> -e GAD_Runonce=true microchi/github_artifact_downloader:latest
 
 Environment Variables
 ---
