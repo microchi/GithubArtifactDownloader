@@ -1,5 +1,6 @@
 
 FROM node:latest AS build
+
 WORKDIR /app
 
 COPY package.json .
@@ -9,10 +10,12 @@ RUN yarn install
 RUN yarn build
 
 FROM alpine:latest
+
 ENV GAD_Owner=YourOwner
 ENV GAD_Repo=YourRepository
 ENV GAD_Token=YourToken
 ENV GAD_Runonce=false
+ENV GAD_Delay=5
 
 EXPOSE 3000
 
