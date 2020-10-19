@@ -3,9 +3,14 @@
 
 How To Use
 ---
+
+## Warnning!!! 
+
+    All file in ThePathYouWantToDownload WILL BE ERASED before Download!
+
 1.Launch By Http Post
 
-    docker run --name <YourName> -d -p 3000:3000 -v <ThePathYouWantToDownload>:/root/dist -e GAD_Owner=<Owner> -e GAD_Repo=<Repository> -e GAD_Token=<Token> microchi/github_artifact_downloader:latest
+    docker run --name <YourName> -d -p 3000:3000 -v <ThePathYouWantToDownload>:/root/dist -e GAD_Owner=<Owner> -e GAD_Repo=<Repository> -e GAD_Token=<Token> -e GAD_Delay=<Seconds> microchi/github_artifact_downloader:latest
     
     then
     
@@ -32,3 +37,7 @@ Environment Variables
 4.GAD_Runonce=false
 
     Run Once. Default is false)
+
+4.GAD_Delay=5
+
+    Seconds Delay To Launch Download. Default is 5)

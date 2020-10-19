@@ -16,7 +16,8 @@ program
   .option('-r, --repo <string>', 'Repository, EX: https://github.com/nodejs/node Repository is node')
   .option('-t, --token <string>', 'Personal Access Tokens See https://github.com/settings/tokens')
   .option('-c, --runonce', 'Run Once', false)
-  .option('-p, --port <number>', 'listen Port', 3000);
+  .option('-p, --port <number>', 'Listen Port', 3000)
+  .option('-d, --delay <number>', 'Seconds Delay To Launch Download', 5);
 
 program.parse(process.argv);
 
@@ -40,12 +41,13 @@ if (!program.repo) program.repo = process.env.GAD_Repo;
 if (!program.token) program.token = process.env.GAD_Token;
 if (process.env.GAD_Runonce) program.runonce = process.env.GAD_Runonce;
 if (process.env.GAD_Port) program.port = process.env.GAD_Port;
+if (process.env.GAD_Delay) program.delay = process.env.GAD_Delay;
 
 if (!program.owner || !program.repo || !program.token) {
   console.log('\nMiss Options');
   console.log(program.opts());
   console.log(`\n${program.helpInformation()}`);
-  console.log('Or Use .env file to set Options\n\nGAD_Owner=YourOwner\nGAD_Repo=YourRepository\nGAD_Token=YourToken\nGAD_Runonce=true\nGAD_Port=3000\n');
+  console.log('Or Use .env file to set Options\n\nGAD_Owner=YourOwner\nGAD_Repo=YourRepository\nGAD_Token=YourToken\nGAD_Runonce=true\nGAD_Port=3000\nGAD_Delay=5\n');
   return;
 }
 
@@ -53,11 +55,20 @@ const dist = './dist';
 
 const octokit = new Octokit({ auth: program.token });
 
+function sleep() {
+  return new Promise((resolve) => setTimeout(resolve, program.delay * 1000));
+}
+
 async function DownloadArtifact() {
+  if (program.runonce !== 'true' && program.delay > 0) {
+    console.log(`Delay ${program.delay} Second(s)...`);
+    await sleep();
+  }
+
   console.log('Downloading...');
 
   fs.readdir(dist, (err, files) => {
-    for (const file of files) if (file !== '.htaccess') rmdir(path.join(dist, file), () => {});
+    for (const file of files) rmdir(path.join(dist, file), () => {});
   });
 
   const artifacts = await octokit.request('GET /repos/{owner}/{repo}/actions/artifacts?per_page=1', {
