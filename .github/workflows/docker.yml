@@ -7,6 +7,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: docker build --pull --rm -f "Dockerfile" -t github_artifact_downloader:latest "."
       - run: docker save github_artifact_downloader:latest | gzip > GithubArtifactDownloader.tar.gz
+      - run: docker login ghcr.io -u microchi -p ${{ secrets.TOKEN }}
       - uses: actions/upload-artifact@v2
         with:
           path: GithubArtifactDownloader.tar.gz
