@@ -1,0 +1,12 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker build --pull --rm -f "Dockerfile" -t GithubArtifactDownloader:latest "."
+      - run: docker save GithubArtifactDownloader:latest | gzip > GithubArtifactDownloader.tar.gz
+      - uses: actions/upload-artifact@v2
+        with:
+          path: GithubArtifactDownloader.tar.gz
