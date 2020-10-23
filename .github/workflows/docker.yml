@@ -10,7 +10,7 @@ jobs:
       - run: docker build --pull --rm -f "Dockerfile" -t ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:$GITHUB_SHA "." --cache-from ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:latest
       - run: docker push ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:$GITHUB_SHA
       - run: docker tag ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:$GITHUB_SHA ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:latest
-      - run: docker save ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:latest | gzip > GithubArtifactDownloader.tar.gz  
+      - run: docker save ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:latest | gzip > GithubArtifactDownloader1.tar.gz  
       - uses: actions/upload-artifact@v2        
         with:
-          path: GithubArtifactDownloader.tar.gz
+          path: GithubArtifactDownloader1.tar.gz
