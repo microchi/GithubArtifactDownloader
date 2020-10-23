@@ -1,13 +1,15 @@
-name: CI
+name: docker
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: docker build --pull --rm -f "Dockerfile" -t github_artifact_downloader:latest "."
-      - run: docker save github_artifact_downloader:latest | gzip > GithubArtifactDownloader.tar.gz
-      - run: docker login ghcr.io -u microchi -p ${{ secrets.TOKEN }}
-      - uses: actions/upload-artifact@v2
+      - run: echo ${{ secrets.TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+      - run: docker pull ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:latest
+      - run: docker build --pull --rm -f "Dockerfile" -t ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:$GITHUB_SHA "." --cache-from ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:latest
+      - run: docker push ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:$GITHUB_SHA
+      - run: docker save ghcr.io/$GITHUB_ACTOR/github_artifact_downloader:latest | gzip > GithubArtifactDownloader.tar.gz  
+      - uses: actions/upload-artifact@v2        
         with:
           path: GithubArtifactDownloader.tar.gz
