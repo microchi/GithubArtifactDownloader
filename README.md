@@ -1,4 +1,4 @@
-# Listen on http post to launch download the action artifact in your github Repository.
+# Listen on http post to launch a download from the action artifact in your github Repository.
 ---
 
 How To Use
@@ -24,11 +24,11 @@ Environment Variables
 ---
 1.GAD_Owner=YourOwner
 
-     Owner, EX: https://github.com/nodejs/node Owner is nodejs
+     Owner, EX: https://github.com/nodejs/node , Owner is nodejs
 
 2.GAD_Repo=YourRepository
 
-    Repository, EX: https://github.com/nodejs/node Repository is node'
+    Repository, EX: https://github.com/nodejs/node , Repository is node'
 
 3.GAD_Token=YourToken
 
@@ -36,8 +36,8 @@ Environment Variables
 
 4.GAD_Runonce=false
 
-    Run Once. Default is false)
+    Run Once. Default is false.
 
 4.GAD_Delay=5
 
-    Seconds Delay To Launch Download. Default is 5)
+    Seconds for delay to launch the download. Default is 5.
